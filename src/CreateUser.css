@@ -1,0 +1,18 @@
+.create-user-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  background-color: rgb(88, 170, 196);
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
+}
+
+.create-user-form > * {
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+}

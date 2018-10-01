@@ -1,0 +1,45 @@
+.landing-heading {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.landing-title {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.landing-subtitle {
+  position: relative;
+  margin-top: 0;
+  text-align: center;
+}
+
+.member-list {
+  display: flex;
+  flex-direction: column;
+
+  max-width: 1000px;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.action-btn {
+  background: rgb(72, 199, 216);
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: gray 10;
+  width: 150px;
+  padding: 0.5rem;
+}
+
+.action-btn > p {
+  font-weight: 700;
+  margin-top: 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+}
