@@ -4,12 +4,14 @@ import Header from "./Header";
 import MemberList from "./MemberList";
 import CreateUser from "./CreateUser";
 import spinner from "./spinner-91.gif";
+import UpdateUser from "./UpdateUser";
 const url = "http://localhost:8080/api";
 
 class App extends React.Component {
   state = {
     users: null,
-    isLoading: false
+    isLoading: false,
+    currentUser: null
   };
 
   updateData = () => {
@@ -39,13 +41,21 @@ class App extends React.Component {
       method: "POST",
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" }
-    });
+    })
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
   };
 
   deleteUser = id => {
     fetch(url + `/users/${id}`, { method: "Delete" }).then(res =>
       this.updateData()
     );
+  };
+
+  handleUserClick = id => {
+    let user = this.state.users.filter(user => user.id === id);
+    this.setState({ currentUser: user[0] });
+    console.log(id);
   };
 
   render() {
@@ -67,9 +77,11 @@ class App extends React.Component {
           <MemberList
             userData={this.state.users}
             deleteUser={this.deleteUser}
+            handleUserClick={this.handleUserClick}
           />
         )}
         <button onClick={this.updateData}>Update Data</button>
+        <UpdateUser selectedUser={this.state.currentUser} />
       </div>
     );
   }

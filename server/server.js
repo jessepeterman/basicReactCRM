@@ -1,22 +1,18 @@
+var config = require("../config.js");
 var express = require("express");
 var app = express();
+var router = express.Router();
 var bodyParser = require("body-parser");
 var pgp = require("pg-promise")();
-var cors = require("cors");
-import { config } from "../config";
-
-app.use("/api", router);
-app.use(cors());
-
 var db = pgp(config);
 
-app.use(bodyParser());
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser());
+app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
+app.use(express.json());
+app.use("/api", router);
 
 var port = process.env.PORT || 8080;
-
-var router = express.Router();
 
 router.use((req, res, next) => {
   console.log("Something is happening.");
@@ -31,6 +27,13 @@ router.get("/users", (req, res) => {
   db.query("SELECT * FROM users")
     .then(users => res.json(users))
     .catch(error => console.log(error));
+});
+
+router.get("/users/:id", (req, res) => {
+  const id = req.params.id;
+  db.one(`SELECT * FROM users where id=${id}`)
+    .then(user => res.json(user))
+    .catch(err => console.log(err));
 });
 
 router.post("/users", (req, res) => {
@@ -52,6 +55,22 @@ router.delete("/users/:id", (req, res) => {
   const id = parseInt(req.params.id);
   db.query(`DELETE FROM users WHERE id = ${id}`)
     .then(res => console.log(res))
+    .catch(err => console.log(err));
+});
+
+router.put("/users/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const firstName = req.body.firstname;
+  const lastName = req.body.lastname;
+  const email = req.body.email;
+
+  console.log(id, firstName, lastName, email);
+
+  db.none(
+    `UPDATE users SET firstname=${firstName} lastname=${lastName} email=${email}
+WHERE id = ${id}`
+  )
+    .then(res => res.json())
     .catch(err => console.log(err));
 });
 
