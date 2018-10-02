@@ -5,7 +5,7 @@ import MemberList from "./MemberList";
 import CreateUser from "./CreateUser";
 import spinner from "./spinner-91.gif";
 import UpdateUser from "./UpdateUser";
-const url = "http://localhost:8080/api";
+import url from "./app-config";
 
 class App extends React.Component {
   state = {
