@@ -7,7 +7,7 @@ var pgp = require("pg-promise")();
 var db = pgp(config);
 
 // app.use(bodyParser());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use("/api", router);
@@ -31,7 +31,7 @@ router.get("/users", (req, res) => {
 
 router.get("/users/:id", (req, res) => {
   const id = req.params.id;
-  db.one(`SELECT * FROM users where id=${id}`)
+  db.one(`SELECT * FROM users WHERE id=${id}`)
     .then(user => res.json(user))
     .catch(err => console.log(err));
 });
@@ -67,10 +67,12 @@ router.put("/users/:id", (req, res) => {
   console.log(id, firstName, lastName, email);
 
   db.none(
-    `UPDATE users SET firstname=${firstName} lastname=${lastName} email=${email}
-WHERE id = ${id}`
+    //     `UPDATE users SET firstname=${firstName} lastname=${lastName} email=${email}
+    // WHERE id=${id}`
+    `update users set firstname=$1, lastname=$2, email=$3 where id=${id}`,
+    [firstName, lastName, email]
   )
-    .then(res => res.json())
+    .then(res => res)
     .catch(err => console.log(err));
 });
 
