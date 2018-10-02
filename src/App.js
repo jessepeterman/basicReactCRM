@@ -74,11 +74,23 @@ class App extends React.Component {
             />
           </div>
         ) : (
-          <MemberList
-            userData={this.state.users}
-            deleteUser={this.deleteUser}
-            handleUserClick={this.handleUserClick}
-          />
+          <div>
+            <table>
+              <tbody>
+                <tr>
+                  <th style={style.table}>First Name</th>
+                  <th style={style.table}>Last Name </th>
+                  <th style={style.table}>Email</th>
+                  <th style={style.table}>Delete</th>
+                </tr>
+                <MemberList
+                  userData={this.state.users}
+                  deleteUser={this.deleteUser}
+                  handleUserClick={this.handleUserClick}
+                />
+              </tbody>
+            </table>
+          </div>
         )}
         <button onClick={this.updateData}>Update Data</button>
         <UpdateUser selectedUser={this.state.currentUser} />
@@ -88,3 +100,10 @@ class App extends React.Component {
 }
 
 export default App;
+
+const style = {
+  table: {
+    width: "10rem",
+    textAlign: "left"
+  }
+};
