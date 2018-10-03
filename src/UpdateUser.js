@@ -28,18 +28,22 @@ class UpdateUser extends React.Component {
       email: email.value
     };
 
-    fetch(url + `/users/${this.props.selectedUser.id}`, {
-      method: "PUT",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" }
-    });
+    if (this.props.selectedUser && this.props.selectedUser.id) {
+      fetch(url + `/users/${this.props.selectedUser.id}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" }
+      });
+      this.clearInputs(firstname, lastname, email);
+    } else {
+      alert("Cannot update without valid ID");
+    }
 
     // this.props.createUser({
     //   firstname: firstname.value,
     //   lastname: lastname.value,
     //   email: email.value
     // });
-    this.clearInputs(firstname, lastname, email);
   };
 
   render() {

@@ -1,11 +1,12 @@
 import React from "react";
-import "./App.css";
+import { Route, Link } from "react-router-dom";
 import Header from "./Header";
 import MemberList from "./MemberList";
 import CreateUser from "./CreateUser";
 import spinner from "./spinner-91.gif";
 import UpdateUser from "./UpdateUser";
 import url from "./app-config";
+import "./App.css";
 
 class App extends React.Component {
   state = {
@@ -55,7 +56,6 @@ class App extends React.Component {
   handleUserClick = id => {
     let user = this.state.users.filter(user => user.id === id);
     this.setState({ currentUser: user[0] });
-    console.log(id);
   };
 
   render() {
@@ -93,7 +93,9 @@ class App extends React.Component {
           </div>
         )}
         <button onClick={this.updateData}>Update Data</button>
-        <UpdateUser selectedUser={this.state.currentUser} />
+        <Route eact path="/update/:id">
+          <UpdateUser selectedUser={this.state.currentUser} />
+        </Route>
       </div>
     );
   }

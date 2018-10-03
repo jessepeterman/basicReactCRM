@@ -1,5 +1,6 @@
 import React from "react";
 import "./MemberList.css";
+import { Link, Redirect } from "react-router-dom";
 
 const MemberList = props => {
   const { userData } = props;
@@ -13,10 +14,15 @@ const MemberList = props => {
     return props.handleUserClick(id);
   };
 
-  return userData.map(({ firstname, lastname, email, id }) => (
+  return userData.map(({ match, firstname, lastname, email, id }) => (
+    // <Link to={`${props.match.url}/user`}>
+    // <Link to={`${match.url}/${id}`} key={id}>
     <tr key={id} onClick={handleUserClick.bind(this, id)}>
       <td>{firstname}</td>
       <td>{lastname}</td>
+      {/* <Redirect to={`/users/${id}`} /> */}
+
+      {/* <Link to={`/user/${id}`} key={id}> */}
       <td>{email}</td>
       <td>
         <a href="" onClick={e => handleClick(e, id)}>
@@ -24,6 +30,7 @@ const MemberList = props => {
         </a>
       </td>
     </tr>
+    // </Link>
   ));
 };
 
