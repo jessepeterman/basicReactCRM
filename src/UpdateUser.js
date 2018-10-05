@@ -1,5 +1,6 @@
 import React from "react";
 import "./CreateUser.css";
+
 const url = "http://localhost:8080/api";
 
 class UpdateUser extends React.Component {
@@ -39,14 +40,11 @@ class UpdateUser extends React.Component {
       alert("Cannot update without valid ID");
     }
 
-    // this.props.createUser({
-    //   firstname: firstname.value,
-    //   lastname: lastname.value,
-    //   email: email.value
-    // });
+    // redirect to homepage
   };
 
   render() {
+    console.log(this.props.selectedUser);
     return (
       <div>
         <form onSubmit={this.handleSubmit} className="create-user-form">

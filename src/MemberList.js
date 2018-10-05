@@ -1,6 +1,6 @@
 import React from "react";
 import "./MemberList.css";
-import { Link, Redirect } from "react-router-dom";
+import MemberEntry from "./MemberEntry";
 
 const MemberList = props => {
   const { userData } = props;
@@ -9,38 +9,37 @@ const MemberList = props => {
     return props.deleteUser(id);
   };
 
-  const handleUserClick = (id, e) => {
-    e.stopPropagation(); // doesn't seem to be working
-    return props.handleUserClick(id);
+  const handleUserSelect = id => {
+    alert("selected");
+    return props.handleUserSelect(id);
   };
 
-  return userData.map(({ match, firstname, lastname, email, id }) => (
-    // <Link to={`${props.match.url}/user`}>
-    // <Link to={`${match.url}/${id}`} key={id}>
-    <tr key={id} onClick={handleUserClick.bind(this, id)}>
-      <td>{firstname}</td>
-      <td>{lastname}</td>
-      {/* <Redirect to={`/users/${id}`} /> */}
-
-      {/* <Link to={`/user/${id}`} key={id}> */}
-      <td>{email}</td>
-      <td>
-        <a href="" onClick={e => handleClick(e, id)}>
-          X
-        </a>
-      </td>
-    </tr>
-    // </Link>
-  ));
+  return (
+    <div>
+      <table>
+        <tbody>
+          <tr>
+            <th style={style.table}>First Name</th>
+            <th style={style.table}>Last Name </th>
+            <th style={style.table}>Email</th>
+            <th style={style.table}>Delete</th>
+          </tr>
+          <MemberEntry
+            userData={userData}
+            deleteUser={props.deleteUser}
+            handleUserSelect={props.handleUserSelect}
+          />
+        </tbody>
+      </table>
+    </div>
+  );
 };
 
 export default MemberList;
 
-{
-  /* <li key={id} onClick={handleUserClick.bind(this, id)}>
-  {firstname} {lastname}: {email}{" "}
-  <a href="" onClick={e => handleClick(e, id)}>
-    X
-      </a>
-</li> */
-}
+const style = {
+  table: {
+    width: "10rem",
+    textAlign: "left"
+  }
+};
