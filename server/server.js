@@ -19,6 +19,11 @@ router.use((req, res, next) => {
   next();
 });
 
+//Create new DB if it doesn't exist
+// db.query(`CREATE DATABASE mydb`)
+//   .then(user => res.json(user))
+//   .catch(err => console.log(err));
+
 router.get("/", (req, res) => {
   return res.json({ message: "hoooray...api here" });
 });
@@ -44,7 +49,7 @@ router.post("/users", (req, res) => {
   db.query(
     `INSERT INTO users(firstname, lastname, email) VALUES('${firstName}', '${lastName}', '${email}')`
   )
-    .then(response => response.json())
+    .then(response => response)
     .catch(err => console.log(err));
 
   // console.log("created new user");

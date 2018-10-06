@@ -4,8 +4,14 @@ import Header from "./Header";
 import UpdateUser from "./UpdateUser";
 import CreateUser from "./CreateUser";
 import MemberList from "./MemberList";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import spinner from "./spinner-91.gif";
 import url from "./app-config";
+import TableTest from "./TableTest";
+import Nav from "./Nav";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Card from "./Card";
 import "./App.css";
 
 class MainApp extends React.Component {
@@ -56,25 +62,50 @@ class MainApp extends React.Component {
   };
 
   render() {
-    console.log(this.state.users);
     return (
       <Router>
         <div>
-          <Header numOfMembers={this.state.users && this.state.users.length} />
+          {/* <Header numOfMembers={this.state.users && this.state.users.length} /> */}
+          <Nav />
           <Switch>
             <Route exact path="/">
               {this.state.users && this.state.users.length > 0 ? (
-                <MemberList
-                  handleUserSelect={this.handleUserSelect}
-                  userData={this.state.users}
-                  deleteUser={this.deleteUser}
-                />
+                <div>
+                  <MemberList
+                    handleUserSelect={this.handleUserSelect}
+                    userData={this.state.users}
+                    deleteUser={this.deleteUser}
+                  />
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.updateData}
+                  >
+                    Update Data
+                  </Button>
+                </div>
               ) : (
-                <img
-                  style={{ width: 35, height: 32 }}
-                  src={spinner}
-                  alt="laoding..."
-                />
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "40vh"
+                  }}
+                >
+                  <CircularProgress
+                    color="primary"
+                    size={55}
+                    variant="indeterminate"
+                  />
+                  {/* <img
+                    style={{
+                      width: 50,
+                      height: 50
+                    }}
+                    src={spinner}
+                    alt="laoding..."
+                  /> */}
+                </div>
               )}
             </Route>
             <Route path="/create">
@@ -83,8 +114,18 @@ class MainApp extends React.Component {
             <Route path="/update">
               <UpdateUser selectedUser={this.state.selectedUser} />
             </Route>
+            <Route path="/table">
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+              >
+                <Card />
+                <TableTest />
+              </Grid>
+            </Route>
           </Switch>
-          <button onClick={this.updateData}>Update Data</button>
         </div>
       </Router>
     );

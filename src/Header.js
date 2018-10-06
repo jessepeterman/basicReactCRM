@@ -17,5 +17,6 @@ const Header = ({ numOfMembers }) => {
 export default Header;
 
 const style = {
-  textDecoration: "none"
+  textDecoration: "none",
+  color: "black"
 };

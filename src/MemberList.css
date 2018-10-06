@@ -1,12 +1,12 @@
 table {
   display: flex;
   justify-content: center;
-  background-color: beige;
   max-width: 60%;
   margin-left: auto;
   margin-right: auto;
   border-radius: 5px;
   border: 1px solid black;
+  margin-top: 2rem;
 }
 
 tr:hover {
@@ -33,4 +33,8 @@ td > a:hover {
 
 td {
   text-decoration: none;
+}
+
+.selected-user {
+  background-color: lightgray;
 }

@@ -22,7 +22,7 @@ const MemberList = props => {
             <th style={style.table}>First Name</th>
             <th style={style.table}>Last Name </th>
             <th style={style.table}>Email</th>
-            <th style={style.table}>Delete</th>
+            <th style={style.table} />
           </tr>
           <MemberEntry
             userData={userData}
