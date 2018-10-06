@@ -21,14 +21,14 @@ class MainApp extends React.Component {
   };
 
   updateData = () => {
-    fetch(url + `/users`) //, { mode: "no-cors" })
+    fetch(url + `/users`, {
+      mode: "cors"
+    })
       .then(res => {
         return res.json();
       })
       .then(users => {
-        this.setState({
-          users
-        });
+        this.setState({ users });
         return users;
       })
       .catch(err => {
