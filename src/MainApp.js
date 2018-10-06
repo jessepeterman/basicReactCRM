@@ -6,13 +6,14 @@ import CreateUser from "./CreateUser";
 import MemberList from "./MemberList";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import spinner from "./spinner-91.gif";
-import url from "./app-config";
+// import url from "./app-config";
 import TableTest from "./TableTest";
 import Nav from "./Nav";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Card from "./Card";
 import "./App.css";
+const url = "http://localhost:8080/api";
 
 class MainApp extends React.Component {
   state = {
