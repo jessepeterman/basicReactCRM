@@ -9,6 +9,8 @@ var bodyParser = require("body-parser");
 // var pgp = require("pg-promise")();
 // var db = pgp(config);
 
+console.log(process.env);
+
 const { Pool, Client } = require("pg");
 const connectionString =
   process.env.REACT_APP_DATABASE_URL || "http://localhost:8080/api";
@@ -27,7 +29,7 @@ db.connect();
 app.use(bodyParser());
 app.use(function(req, res, next) {
   const corsURL = process.env.REACT_APP_CORSURL || "http://localhost:3000";
-  res.header("Access-Control-Allow-Origin", CORSURL);
+  res.header("Access-Control-Allow-Origin", corsURL);
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.header(
     "Access-Control-Allow-Headers",
