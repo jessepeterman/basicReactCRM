@@ -27,7 +27,7 @@ db.connect();
 app.use(bodyParser());
 app.use(function(req, res, next) {
   const corsURL = process.env.REACT_APP_CORSURL || "http://localhost:3000";
-  res.header("Access-Control-Allow-Origin", corsURL);
+  res.header("Access-Control-Allow-Origin", CORSURL);
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.header(
     "Access-Control-Allow-Headers",
