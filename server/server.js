@@ -3,18 +3,39 @@ var express = require("express");
 var app = express();
 var router = express.Router();
 var bodyParser = require("body-parser");
-var pgp = require("pg-promise")();
-var db = pgp(config);
+// require("dotenv").config();
 
-// app.use(bodyParser());
+// const pg = require("pg");
+// var pgp = require("pg-promise")();
+// var db = pgp(config);
+
+const { Pool, Client } = require("pg");
+const connectionString =
+  process.env.REACT_APP_DATABASE_URL || "http://localhost:8080/api";
+
+const db = new Client({
+  connectionString: connectionString
+});
+
+db.connect();
+
+// client.query("SELECT * from users", (err, res) => {
+//   console.log(err, res);
+//   client.end();
+// });
+
+app.use(bodyParser());
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  const corsURL = process.env.REACT_APP_CORSURL || "http://localhost:3000";
+  res.header("Access-Control-Allow-Origin", corsURL);
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   next();
 });
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());
@@ -46,7 +67,7 @@ router.get("/users/:id", (req, res) => {
   const id = req.params.id;
   db.one(`SELECT * FROM users WHERE id=${id}`)
     .then(user => res.json(user))
-    .catch(err => console.log(err));
+    .csatch(err => console.log(err));
 });
 
 router.post("/users", (req, res) => {
@@ -79,12 +100,13 @@ router.put("/users/:id", (req, res) => {
 
   console.log(id, firstName, lastName, email);
 
-  db.none(
-    //     `UPDATE users SET firstname=${firstName} lastname=${lastName} email=${email}
-    // WHERE id=${id}`
-    `update users set firstname=$1, lastname=$2, email=$3 where id=${id}`,
-    [firstName, lastName, email]
-  )
+  client
+    .none(
+      //     `UPDATE users SET firstname=${firstName} lastname=${lastName} email=${email}
+      // WHERE id=${id}`
+      `update users set firstname=$1, lastname=$2, email=$3 where id=${id}`,
+      [firstName, lastName, email]
+    )
     .then(res => res)
     .catch(err => console.log(err));
 });

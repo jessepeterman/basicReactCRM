@@ -13,7 +13,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Card from "./Card";
 import "./App.css";
-const url = "http://localhost:8080/api";
+const url = process.env.postgreSQL_URL || "http://localhost:8080/api";
 
 class MainApp extends React.Component {
   state = {
