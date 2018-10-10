@@ -13,7 +13,12 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Card from "./Card";
 import "./App.css";
-const url = process.env.postgreSQL_URL || "http://localhost:8080/api";
+const url = process.env.REACT_APP_DATABASE_URL;
+const corsURL =
+  process.env.REACT_APP_CORSURL + "/" + process.env.PORT ||
+  "http://localhost:8080/api";
+
+// console.log(process.env);
 
 class MainApp extends React.Component {
   state = {
@@ -29,7 +34,8 @@ class MainApp extends React.Component {
         return res.json();
       })
       .then(users => {
-        this.setState({ users });
+        this.setState({ users: users.rows });
+        console.log(users.rows);
         return users;
       })
       .catch(err => {

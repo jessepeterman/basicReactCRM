@@ -1,23 +1,24 @@
-var config = require("../config.js");
+// var config = require("../config.js");
 var express = require("express");
 var app = express();
 var router = express.Router();
 var bodyParser = require("body-parser");
-// require("dotenv").config();
+require("dotenv").config();
+
+// console.log(process.env);
 
 // const pg = require("pg");
 // var pgp = require("pg-promise")();
 // var db = pgp(config);
 
-console.log(process.env);
-
 const { Pool, Client } = require("pg");
-const connectionString =
-  process.env.REACT_APP_DATABASE_URL || "http://localhost:8080/api";
+const connectionString = process.env.REACT_APP_DATABASE_URL;
 
 const db = new Client({
   connectionString: connectionString
 });
+
+// console.log(db)
 
 db.connect();
 
@@ -28,8 +29,16 @@ db.connect();
 
 app.use(bodyParser());
 app.use(function(req, res, next) {
-  const corsURL = process.env.REACT_APP_CORSURL || "http://localhost:3000";
-  res.header("Access-Control-Allow-Origin", corsURL);
+  // const corsURL =
+  //   process.env.NODE_ENV === "development"
+  //     ? "http://localhost:3000"
+  //     : process.env.REACT_APP_CORSURL;
+  const corsURL =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://objective-lalande-b7a1e9.netlify.com";
+
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.header(
     "Access-Control-Allow-Headers",
@@ -67,7 +76,7 @@ router.get("/users", (req, res) => {
 
 router.get("/users/:id", (req, res) => {
   const id = req.params.id;
-  db.one(`SELECT * FROM users WHERE id=${id}`)
+  db.query(`SELECT * FROM users WHERE id=${id}`)
     .then(user => res.json(user))
     .csatch(err => console.log(err));
 });
@@ -102,13 +111,12 @@ router.put("/users/:id", (req, res) => {
 
   console.log(id, firstName, lastName, email);
 
-  client
-    .none(
-      //     `UPDATE users SET firstname=${firstName} lastname=${lastName} email=${email}
-      // WHERE id=${id}`
-      `update users set firstname=$1, lastname=$2, email=$3 where id=${id}`,
-      [firstName, lastName, email]
-    )
+  db.query(
+    //     `UPDATE users SET firstname=${firstName} lastname=${lastName} email=${email}
+    // WHERE id=${id}`
+    `update users set firstname=$1, lastname=$2, email=$3 where id=${id}`,
+    [firstName, lastName, email]
+  )
     .then(res => res)
     .catch(err => console.log(err));
 });
