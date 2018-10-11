@@ -18,7 +18,7 @@ const db = new Client({
   connectionString: connectionString
 });
 
-console.log(db);
+console.log(process.env);
 
 db.connect();
 
