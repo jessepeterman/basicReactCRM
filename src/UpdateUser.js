@@ -1,7 +1,6 @@
 import React from "react";
-import "./CreateUser.css";
 
-const url = "http://localhost:8080/api";
+const url = process.env.REACT_APP_DATABASE_URL;
 
 class UpdateUser extends React.Component {
   // state = {

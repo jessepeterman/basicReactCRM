@@ -12,11 +12,12 @@ import Nav from "./Nav";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Card from "./Card";
+import CreateUserForm from "./CreateUserForm";
+import UpdateUserForm from "./UpdateUserForm";
+
 import "./App.css";
 const url = process.env.REACT_APP_DATABASE_URL;
-const corsURL =
-  process.env.REACT_APP_CORSURL + "/" + process.env.PORT ||
-  "http://localhost:8080/api";
+const corsURL = process.env.REACT_APP_CORSURL + "/" + process.env.PORT;
 
 // console.log(process.env);
 
@@ -116,10 +117,12 @@ class MainApp extends React.Component {
               )}
             </Route>
             <Route path="/create">
-              <CreateUser createUser={this.createUser} />
+              {/* <CreateUser createUser={this.createUser} /> */}
+              <CreateUserForm createUser={this.createUser} />
             </Route>
             <Route path="/update">
-              <UpdateUser selectedUser={this.state.selectedUser} />
+              {/* <UpdateUser selectedUser={this.state.selectedUser} /> */}
+              <UpdateUserForm selectedUser={this.state.selectedUser} />
             </Route>
             <Route path="/table">
               <Grid
