@@ -1,5 +1,5 @@
 import React from "react";
-// import { Route, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
@@ -62,9 +62,12 @@ const UpdateUserForm = props => {
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" }
       })
-        .then(res => props.updateData())
+        .then(res => {
+          alert("Are you sure you want to make these changes?");
+          props.history.push("/");
+          props.updateData();
+        })
         .catch(err => console.log(err));
-      clearInputs(firstname, lastname, email);
     } else {
       alert("Cannot update without valid ID");
     }
@@ -125,4 +128,4 @@ const UpdateUserForm = props => {
   );
 };
 
-export default withStyles(styles)(UpdateUserForm);
+export default withStyles(styles)(withRouter(UpdateUserForm));

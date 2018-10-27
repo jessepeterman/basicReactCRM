@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Link, Redirect } from "react-router-dom";
+import { Route, Link, Redirect, withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
@@ -56,7 +56,7 @@ const CreateUserForm = props => {
       lastname: lastname.value,
       email: email.value
     });
-
+    props.history.push("/");
     clearInputs(firstname, lastname, email);
   };
 
@@ -111,4 +111,4 @@ const CreateUserForm = props => {
   );
 };
 
-export default withStyles(styles)(CreateUserForm);
+export default withStyles(styles)(withRouter(CreateUserForm));
