@@ -38,7 +38,7 @@ const MemberEntry = props => {
       <td>{firstname}</td>
       <td>{lastname}</td>
       <td>{email}</td>
-      <td>
+      <td id="row-icons">
         <a
           href=""
           style={{ color: "red", paddingRight: "1rem" }}

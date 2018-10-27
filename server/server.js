@@ -1,9 +1,9 @@
 // var config = require("../config.js");
+require("dotenv").config();
 var express = require("express");
 var app = express();
 var router = express.Router();
 var bodyParser = require("body-parser");
-require("dotenv").config();
 
 // console.log(process.env);
 
@@ -18,8 +18,6 @@ const db = new Client({
   connectionString: connectionString
 });
 
-console.log(process.env);
-
 db.connect();
 
 // client.query("SELECT * from users", (err, res) => {
@@ -33,12 +31,12 @@ app.use(function(req, res, next) {
   //   process.env.NODE_ENV === "development"
   //     ? "http://localhost:3000"
   //     : process.env.REACT_APP_CORSURL;
-  const corsURL =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://objective-lalande-b7a1e9.netlify.com";
+  const corsURL = "http://localhost:3001";
+  // process.env.NODE_ENV === "development"
+  //   ? "http://localhost:3001"
+  //   : "https://objective-lalande-b7a1e9.netlify.com";
 
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", corsURL);
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.header(
     "Access-Control-Allow-Headers",
@@ -78,7 +76,7 @@ router.get("/users/:id", (req, res) => {
   const id = req.params.id;
   db.query(`SELECT * FROM users WHERE id=${id}`)
     .then(user => res.json(user))
-    .csatch(err => console.log(err));
+    .catch(err => console.log(err));
 });
 
 router.post("/users", (req, res) => {
@@ -89,7 +87,10 @@ router.post("/users", (req, res) => {
   db.query(
     `INSERT INTO users(firstname, lastname, email) VALUES('${firstName}', '${lastName}', '${email}')`
   )
-    .then(response => response)
+    .then(result => {
+      console.log(res);
+      res.sendStatus(200);
+    })
     .catch(err => console.log(err));
 
   // console.log("created new user");
@@ -99,7 +100,10 @@ router.post("/users", (req, res) => {
 router.delete("/users/:id", (req, res) => {
   const id = parseInt(req.params.id);
   db.query(`DELETE FROM users WHERE id = ${id}`)
-    .then(res => console.log(res))
+    .then(result => {
+      console.log(res);
+      res.sendStatus(200);
+    })
     .catch(err => console.log(err));
 });
 
@@ -117,7 +121,10 @@ router.put("/users/:id", (req, res) => {
     `update users set firstname=$1, lastname=$2, email=$3 where id=${id}`,
     [firstName, lastName, email]
   )
-    .then(res => res)
+    .then(result => {
+      console.log(result);
+      res.sendStatus(200);
+    })
     .catch(err => console.log(err));
 });
 
@@ -125,7 +132,6 @@ router.put("/users/:id", (req, res) => {
 // add edit user details form
 //
 
-// router.get("/users/:user_id", (req, res) => {});
-
+// router.get("/users/:user_id", (req, res) => {})
 app.listen(port);
 console.log("Magic happens on port " + port);
